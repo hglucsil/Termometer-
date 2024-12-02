@@ -14,7 +14,6 @@ const firebaseConfig = {
 };
 
 
-
 // Initialisera Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -23,35 +22,115 @@ const sensorRef = ref(database, 'sensor'); // Referens till "sensor"-noden
 let currentTemperature = null;
 let currentHumidity = null;
 
-// Lyssna på förändringar i hela "sensor"-noden
+// Temperaturgraf
+const tempCtx = document.getElementById('temperatureChart').getContext('2d');
+const temperatureLabels = []; // X-axel för temperatur
+const temperatureData = []; // Temperaturdata
+
+const temperatureChart = new Chart(tempCtx, {
+    type: 'line',
+    data: {
+        labels: temperatureLabels,
+        datasets: [{
+            label: 'Temperatur (°C)',
+            data: temperatureData,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Luftfuktighetsgraf
+const humidityCtx = document.getElementById('humidityChart').getContext('2d');
+const humidityLabels = []; // X-axel för luftfuktighet
+const humidityData = []; // Luftfuktighetsdata
+
+const humidityChart = new Chart(humidityCtx, {
+    type: 'line',
+    data: {
+        labels: humidityLabels,
+        datasets: [{
+            label: 'Luftfuktighet (%)',
+            data: humidityData,
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Spara data till Firebase
+function saveToFirebase(timestamp, temperature, humidity) {
+  const sensorRef = ref(database, 'sensor/' + timestamp);
+  set(sensorRef, {
+      temperature: temperature,
+      humidity: humidity
+  });
+}
+
+// Lyssna på förändringar i Firebase och uppdatera båda graferna
 onValue(sensorRef, (snapshot) => {
   const data = snapshot.val();
-  
+
   if (data) {
-    // Hitta den senaste tidsstämpeln
-    const timestamps = Object.keys(data);
-    const latestTimestamp = timestamps[timestamps.length - 1]; // Antar att nycklarna är sorterade
+      const timestamps = Object.keys(data); // Hämtar alla tidsstämplar
+      timestamps.forEach(timestamp => {
+          const currentData = data[timestamp];
+          currentTemperature = currentData.temperature;  // Uppdatera den globala variabeln
+          currentHumidity = currentData.humidity;  // Uppdatera den globala variabeln
 
-    const latestData = data[latestTimestamp];
-    currentTemperature = latestData.temperature;
-    currentHumidity = latestData.humidity;
+          // Uppdatera graferna med den gamla datan
+          temperatureLabels.push(timestamp);
+          temperatureData.push(currentTemperature);
+          humidityLabels.push(timestamp);
+          humidityData.push(currentHumidity);
+      });
 
-    // Uppdatera DOM
-    document.getElementById('temperature').textContent = currentTemperature !== null ? currentTemperature : "Ingen data";
-    document.getElementById('humidity').textContent = currentHumidity !== null ? currentHumidity : "Ingen data";
+      // Uppdatera DOM
+      document.getElementById('temperature').textContent = currentTemperature !== null ? currentTemperature : "Ingen data";
+      document.getElementById('humidity').textContent = currentHumidity !== null ? currentHumidity : "Ingen data";
 
-    // Uppdatera bakgrund och väder
-    if (currentTemperature !== null) {
-      updateBackground(currentTemperature);
-    }
-    DisplayWeather();
+      // Begränsa antal datapunkter till 10
+      if (temperatureLabels.length > 10) {
+          temperatureLabels.shift();
+          temperatureData.shift();
+      }
+      if (humidityLabels.length > 10) {
+          humidityLabels.shift();
+          humidityData.shift();
+      }
+
+      temperatureChart.update();
+      humidityChart.update();
+
+      // Uppdatera bakgrund och väder
+      if (currentTemperature !== null) {
+          updateBackground(currentTemperature);
+      }
+      DisplayWeather();
   } else {
-    console.error("Ingen data finns i databasen.");
-    document.getElementById('temperature').textContent = "Ingen data";
-    document.getElementById('humidity').textContent = "Ingen data";
+      document.getElementById('temperature').textContent = "Ingen data";
+      document.getElementById('humidity').textContent = "Ingen data";
   }
-
-  console.log("Hela datan från Firebase:", data);
 });
 
 

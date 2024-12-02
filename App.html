@@ -10,7 +10,7 @@
   <div class="sun">
     <h2>
       Temperatur <br> 
-      <span id="temperature"></span>C° 
+      <span id="temperature"></span>°C 
     </h2>
   </div>
   <div class="cloud">
@@ -20,25 +20,36 @@
     </div>
       
     <div class="raindrop-container">
-      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 140px; animation-delay: 0.3s; " >
-      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 230px; animation-delay: 0.7s; ">
-      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 300px; animation-delay: 1.2s; ">
-      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 160px; animation-delay: 1s; ">
-      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 180px; animation-delay: 1.7s; ">
-      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 250px; animation-delay: 1.9s; ">
-      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 290px; animation-delay: 2.2s; ">
+      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 60px; animation-delay: 0.3s; " >
+      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 150px; animation-delay: 0.7s; ">
+      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 220px; animation-delay: 1.2s; ">
+      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 80px; animation-delay: 1s; ">
+      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 100px; animation-delay: 1.7s; ">
+      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 170px; animation-delay: 1.9s; ">
+      <img src="/Pictures/Water_droplet.png" class="raindrop" style="left: 210px; animation-delay: 2.2s; ">
 
     </div>
     <div class="snowflake-container">
-      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 140px; animation-delay: 0.6s; " >
-      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 230px; animation-delay: 1.4s; ">
-      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 300px; animation-delay: 2.4s; ">
-      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 160px; animation-delay: 2s; ">
-      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 180px; animation-delay: 3.4s; ">
-      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 250px; animation-delay: 3.8s; ">
-      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 290px; animation-delay: 4.4s; ">
+      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 60px; animation-delay: 0.6s; " >
+      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 150px; animation-delay: 1.4s; ">
+      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 220px; animation-delay: 2.4s; ">
+      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 80px; animation-delay: 2s; ">
+      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 100px; animation-delay: 3.4s; ">
+      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 170px; animation-delay: 3.8s; ">
+      <img src="/Pictures/snowflake_inPixio.png" class="snowflake" style="left: 210px; animation-delay: 4.4s; ">
     </div>
     
+
+    <div class="container">
+      <h1>Temperatur och Luftfuktighet</h1>
+      <canvas id="temperatureChart" width="500" height="250"></canvas>
+      <canvas id="humidityChart" width="500" height="250"></canvas>
+  </div>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
   <script src="App.js" type="module"></script>
 </body>
 </html>
