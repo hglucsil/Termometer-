@@ -14,7 +14,7 @@ const firebaseConfig = {
 };
 
 
-// Initialisera Firebase
+// Initialisera Firebase 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const sensorRef = ref(database, 'sensor'); // Referens till "sensor"-noden
@@ -80,58 +80,62 @@ const humidityChart = new Chart(humidityCtx, {
 
 // Spara data till Firebase
 function saveToFirebase(timestamp, temperature, humidity) {
-  const sensorRef = ref(database, 'sensor/' + timestamp);
-  set(sensorRef, {
-      temperature: temperature,
-      humidity: humidity
-  });
+    const sensorRef = ref(database, 'sensor/' + timestamp);
+    set(sensorRef, {
+        temperature: temperature,
+        humidity: humidity
+    });
 }
 
 // Lyssna på förändringar i Firebase och uppdatera båda graferna
 onValue(sensorRef, (snapshot) => {
-  const data = snapshot.val();
+    const data = snapshot.val();
 
-  if (data) {
-      const timestamps = Object.keys(data); // Hämtar alla tidsstämplar
-      timestamps.forEach(timestamp => {
-          const currentData = data[timestamp];
-          currentTemperature = currentData.temperature;  // Uppdatera den globala variabeln
-          currentHumidity = currentData.humidity;  // Uppdatera den globala variabeln
+    if (data) {
+        const timestamps = Object.keys(data); // Hämtar alla tidsstämplar
 
-          // Uppdatera graferna med den gamla datan
-          temperatureLabels.push(timestamp);
-          temperatureData.push(currentTemperature);
-          humidityLabels.push(timestamp);
-          humidityData.push(currentHumidity);
-      });
+        // Sortera tidsstämplarna för att få den senaste
+        timestamps.sort(); // Om datan inte är sorterad kan vi sortera den här
+        const latestTimestamps = timestamps.slice(-8); // Hämta de senaste 10 tidsstämplarna
 
-      // Uppdatera DOM
-      document.getElementById('temperature').textContent = currentTemperature !== null ? currentTemperature : "Ingen data";
-      document.getElementById('humidity').textContent = currentHumidity !== null ? currentHumidity : "Ingen data";
+        // Töm graferna för att fylla med de senaste 10 värdena
+        temperatureLabels.length = 0;
+        temperatureData.length = 0;
+        humidityLabels.length = 0;
+        humidityData.length = 0;
 
-      // Begränsa antal datapunkter till 10
-      if (temperatureLabels.length > 10) {
-          temperatureLabels.shift();
-          temperatureData.shift();
-      }
-      if (humidityLabels.length > 10) {
-          humidityLabels.shift();
-          humidityData.shift();
-      }
+        latestTimestamps.forEach(timestamp => {
+            const currentData = data[timestamp];
 
-      temperatureChart.update();
-      humidityChart.update();
+            currentTemperature = currentData.temperature;  
+            currentHumidity = currentData.humidity;  
 
-      // Uppdatera bakgrund och väder
-      if (currentTemperature !== null) {
-          updateBackground(currentTemperature);
-      }
-      DisplayWeather();
-  } else {
-      document.getElementById('temperature').textContent = "Ingen data";
-      document.getElementById('humidity').textContent = "Ingen data";
-  }
+            // Lägg till den senaste datan till graferna
+            temperatureLabels.push(timestamp);
+            temperatureData.push(currentTemperature);
+            humidityLabels.push(timestamp);
+            humidityData.push(currentHumidity);
+        });
+
+        // Uppdatera DOM
+        document.getElementById('temperature').textContent = currentTemperature !== null ? currentTemperature : "Ingen data";
+        document.getElementById('humidity').textContent = currentHumidity !== null ? currentHumidity : "Ingen data";
+
+        // Uppdatera graferna
+        temperatureChart.update();
+        humidityChart.update();
+
+        // Uppdatera bakgrund och väder  
+        if (currentTemperature !== null) {
+            updateBackground(currentTemperature);
+        }
+        DisplayWeather();
+    } else {
+        document.getElementById('temperature').textContent = "Ingen data";
+        document.getElementById('humidity').textContent = "Ingen data";
+    }
 });
+
 
 
 
