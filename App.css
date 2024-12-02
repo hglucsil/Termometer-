@@ -1,0 +1,141 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(130, 210, 255); /* Standardfärg */
+  transition: background-color 0.5s ease; /* Mjuk övergång */
+}
+
+
+/* Moln */
+.cloud {
+  position: absolute;
+  top: 180px;
+  left: 100px; 
+  width: 300px;
+  height: 150px;
+  background-color: #FFF; 
+  border-radius: 100px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1; 
+}
+
+/* Texten i Molnet */
+.cloud h2  {
+  text-align: center; 
+  line-height: 1.4;  
+  margin-top: 10px;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background-color: #FFF; 
+  border-radius: 50%;
+  z-index: -1; 
+}
+
+.cloud::before {
+  width: 150px;
+  height: 150px;
+  top: -50px; 
+  left: 30px; 
+}
+
+.cloud::after {
+  width: 180px;
+  height: 180px;
+  top: -70px; 
+  left: 100px; 
+}
+
+
+/* Regndroppe */
+.raindrop-container img.raindrop {
+  position: absolute;
+  top: 175px; 
+  width: 65px;
+  height: 65px;
+  animation: rainfall 2.2s linear infinite;
+  display: none;
+  z-index: 0;
+}
+
+@keyframes rainfall {
+  0% {
+    top: 175px;
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 90vh;
+    opacity: 0;
+  }
+}
+
+
+/* Snöflingor */
+.snowflake-container img.snowflake {
+  position: absolute;
+  top: 175px;
+  width: 55px;
+  height: 55px;
+  animation: snowfall 3.5s linear infinite; 
+  display: none;
+  z-index: 0;
+}
+
+@keyframes snowfall {
+  0% {
+    top: 175px;
+    transform: translateX(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translateX(15px); 
+  }
+  55% {
+    transform: translateX(15px);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    top: 90vh;
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+}
+
+
+/* Sol */
+.sun {
+  position: absolute;
+  top: 100px;
+  right: 100px;
+  width: 225px;
+  height: 225px;
+  background-color: #FFD700;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 223, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+/* Texten i Solen */
+.sun h2 {
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 40px;
+}
