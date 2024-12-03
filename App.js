@@ -24,7 +24,7 @@ let currentHumidity = null;
 
 // Temperaturgraf
 const tempCtx = document.getElementById('temperatureChart').getContext('2d');
-const temperatureLabels = []; // X-axel för temperatur
+const temperatureLabels = []; // X-axel för temperatur(Datum/tid)
 const temperatureData = []; // Temperaturdata
 
 const temperatureChart = new Chart(tempCtx, {
@@ -92,15 +92,6 @@ function formatTimestamp(timestamp) {
     return `${day}/${month}-${year}_${hours}:${minutes}`;
 }
 
-// Spara data till Firebase
-function saveToFirebase(timestamp, temperature, humidity) {
-    const sensorRef = ref(database, 'sensor/' + timestamp);
-    set(sensorRef, {
-        temperature: temperature,
-        humidity: humidity
-    });
-}
-
 // Lyssna på förändringar i Firebase och uppdatera båda graferna
 onValue(sensorRef, (snapshot) => {
     const data = snapshot.val();
@@ -150,9 +141,6 @@ onValue(sensorRef, (snapshot) => {
         document.getElementById('humidity').textContent = "Ingen data";
     }
 });
-
-
-
 
 
 // Funktion för att uppdatera bakgrundsfärg baserat på temperatur
