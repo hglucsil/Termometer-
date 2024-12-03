@@ -80,14 +80,13 @@ const humidityChart = new Chart(humidityCtx, {
 
 // Funktion för att formatera tidsstämpeln
 function formatTimestamp(timestamp) {
-    const date = new Date(timestamp);
+  const date = new Date(timestamp);
 
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Månad (0-11, så vi lägger till 1)
-    const day = String(date.getDate()).padStart(2, '0'); // Dag (01-31)
-    const hours = String(date.getHours()).padStart(2, '0'); // Timme (00-23)
-    const minutes = String(date.getMinutes()).padStart(2, '0'); // Minuter (00-59)
-    const seconds = String(date.getSeconds()).padStart(2, '0'); // Sekunder (00-59)
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Månad (0-11, lägg till 1)
+  const day = String(date.getUTCDate()).padStart(2, '0'); // Dag
+  const hours = String(date.getUTCHours()).padStart(2, '0'); // Timme
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0'); // Minuter
 
     return `${day}/${month}-${year}_${hours}:${minutes}`;
 }
@@ -100,8 +99,8 @@ onValue(sensorRef, (snapshot) => {
         const timestamps = Object.keys(data); // Hämtar alla tidsstämplar
 
         // Sortera tidsstämplarna för att få den senaste
-        timestamps.sort(); // Om datan inte är sorterad kan vi sortera den här
-        const latestTimestamps = timestamps.slice(-8); // Hämta de senaste 8 tidsstämplarna
+        timestamps.sort(); 
+        const latestTimestamps = timestamps.slice(-8); 
 
         // Töm graferna för att fylla med de senaste 8 värdena
         temperatureLabels.length = 0;
