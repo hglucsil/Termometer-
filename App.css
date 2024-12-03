@@ -106,7 +106,7 @@ body {
   55% {
     transform: translateX(15px);
   }
-  70% {
+  80% {
     opacity: 1;
   }
   100% {
@@ -156,7 +156,9 @@ body {
 }
 
 /* Stil för rubriken */
-h1 {
+.graf h1 {
   color: #333;
   font-size: 24px;
 }
+
+

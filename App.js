@@ -83,12 +83,13 @@ function formatTimestamp(timestamp) {
   const date = new Date(timestamp);
 
   const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Månad (0-11, lägg till 1)
-  const day = String(date.getUTCDate()).padStart(2, '0'); // Dag
-  const hours = String(date.getUTCHours()).padStart(2, '0'); // Timme
-  const minutes = String(date.getUTCMinutes()).padStart(2, '0'); // Minuter
+  const month = String(date.getUTCMonth() + 1)
+  const day = String(date.getUTCDate())
+  const hours = String(date.getUTCHours()).padStart(2, '0'); 
+  const minutes = String(date.getUTCMinutes()).padStart(2, '0'); 
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0'); // Används inte 
 
-    return `${day}/${month}-${year}_${hours}:${minutes}`;
+    return `${day}/${month}-${year}__${hours}:${minutes}`;
 }
 
 // Lyssna på förändringar i Firebase och uppdatera båda graferna
