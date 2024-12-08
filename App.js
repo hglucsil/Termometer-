@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
-// Din Firebase-konfiguration
+// Firebase-konfiguration
 const firebaseConfig = {
   apiKey: "AIzaSyA6A71DIwrLphGxwz3KI8W6aIOKiWYgdLw",
   authDomain: "i-hetaste-laget-40387.firebaseapp.com",
@@ -87,7 +87,7 @@ function formatTimestamp(timestamp) {
   const day = String(date.getUTCDate())
   const hours = String(date.getUTCHours()).padStart(2, '0'); 
   const minutes = String(date.getUTCMinutes()).padStart(2, '0'); 
-  const seconds = String(date.getUTCSeconds()).padStart(2, '0'); // Används inte 
+  const seconds = String(date.getUTCSeconds()).padStart(2, '0'); // Används inte, men finns om jag vill ha mer exakta tidpunkter
 
     return `${day}/${month}-${year}__${hours}:${minutes}`;
 }
@@ -99,11 +99,11 @@ onValue(sensorRef, (snapshot) => {
     if (data) {
         const timestamps = Object.keys(data); // Hämtar alla tidsstämplar
 
-        // Sortera tidsstämplarna för att få den senaste
+        // Sortera tidsstämplarna för att få de senaste
         timestamps.sort(); 
         const latestTimestamps = timestamps.slice(-50); 
 
-        // Töm graferna för att fylla med de senaste 8 värdena
+        // Töm graferna för att fylla med de senaste 50 värdena
         temperatureLabels.length = 0;
         temperatureData.length = 0;
         humidityLabels.length = 0;
