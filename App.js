@@ -101,7 +101,7 @@ onValue(sensorRef, (snapshot) => {
 
         // Sortera tidsstämplarna för att få den senaste
         timestamps.sort(); 
-        const latestTimestamps = timestamps.slice(-8); 
+        const latestTimestamps = timestamps.slice(-50); 
 
         // Töm graferna för att fylla med de senaste 8 värdena
         temperatureLabels.length = 0;
