@@ -37,7 +37,7 @@ const temperatureChart = new Chart(tempCtx, {
             borderColor: 'rgb(75, 192, 192)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             fill: true,
-            tension: 0.4
+            tension: 0.2
         }]
     },
     options: {
@@ -65,7 +65,7 @@ const humidityChart = new Chart(humidityCtx, {
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             fill: true,
-            tension: 0.4
+            tension: 0.2
         }]
     },
     options: {
